@@ -50,7 +50,6 @@ function create() {
     dog.body.checkCollision.right = true;
     dog.body.checkCollision.up = true;
     dog.body.checkCollision.down = true;
-    dog.body.checkCollision = true
     dog.animations.add("down", [0, 1, 2], 10, true);
     dog.animations.add("left", [3, 4, 5], 10, true);
     dog.animations.add("right", [6, 7, 8], 10, true);
