@@ -32,8 +32,8 @@ function create() {
   game.physics.enable(player);
   game.physics.enable(dogs);
   player.body.collideWorldBounds = true;
-  //console.log(choco);
-  console.log("example?");
+
+
   //dogs.map(dog => dog.body.collideWorldBounds = true);
   //add animations for each dog
   player.animations.add("left", [5, 6, 7, 8, 9], 10, true);
@@ -44,6 +44,13 @@ function create() {
   //random dog generator - generates all dogs on doggo spritesheet
   function randomDogGenerator(name) {
     let dog = dogs.create(game.world.randomX, game.world.randomY, name, 1);
+    game.physics.enable(dog)
+    dog.body.immovable = true
+    dog.body.checkCollision.left = true;
+    dog.body.checkCollision.right = true;
+    dog.body.checkCollision.up = true;
+    dog.body.checkCollision.down = true;
+    dog.body.checkCollision = true
     dog.animations.add("down", [0, 1, 2], 10, true);
     dog.animations.add("left", [3, 4, 5], 10, true);
     dog.animations.add("right", [6, 7, 8], 10, true);
@@ -69,10 +76,12 @@ function create() {
 
 function update() {
    //Reset the players velocity (movement)
+
   allDogs.map((dog,i) => {
     if (i%2===0) {
       dog.x -= 2;
       dog.animations.play("left", 10, true);
+      game.physics.arcade.collide(dog, player);
       if (dog.x <= 0) {
         dog.x = game.world.width;
         dog.y = game.world.randomY
@@ -81,6 +90,7 @@ function update() {
     } else {
       dog.x += 2;
       dog.animations.play("right", 10, true);
+      game.physics.arcade.collide(dog, player);
       if (dog.x >= game.world.width) {
         dog.x = 1;
         dog.y = game.world.randomY
