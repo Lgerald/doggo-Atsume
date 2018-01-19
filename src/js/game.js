@@ -28,16 +28,28 @@ function create() {
   //add player (but find a new one)
   player = game.add.sprite(32, game.world.height - 150, "person");
   //enable physics for player and dogs
+  game.physics.startSystem(Phaser.Physics.ARCADE);
   game.physics.enable(player);
   game.physics.enable(dogs);
+  player.body.collideWorldBounds = true;
+  //console.log(choco);
+  console.log("example?");
+  //dogs.map(dog => dog.body.collideWorldBounds = true);
+  //add animations for each dog
+  player.animations.add("left", [5, 6, 7, 8, 9], 10, true);
+  player.animations.add("up", [10, 11, 12, 13, 14], 10, true);
+  player.animations.add("right", [15, 16, 17, 18, 19], 10, true);
+  player.animations.add("down", [0, 1, 2, 3, 4], 10, true);
 
   //random dog generator - generates all dogs on doggo spritesheet
   function randomDogGenerator(name) {
     let dog = dogs.game.add.sprite(game.world.randomX, game.world.randomY, name, 1);
+    //dog.body.immovable = true;
     dog.animations.add("down", [0, 1, 2], 10, true);
     dog.animations.add("left", [3, 4, 5], 10, true);
     dog.animations.add("right", [6, 7, 8], 10, true);
     dog.animations.add("up", [9, 10, 11], 10, true);
+    
     return dog;
   }
   let choco = randomDogGenerator("choco");
@@ -51,17 +63,26 @@ function create() {
   allDogs = [choco, brown, black, drkbrown, grey, ltgrey, tan, white];
 
   //add animations to random dog generations (but make them run on a loop?)
-  player.body.collideWorldBounds = true;
-  //console.log(choco);
-  console.log("example?");
-  //dogs.map(dog => dog.body.collideWorldBounds = true);
-  //add animations for each dog
-  player.animations.add("left", [5, 6, 7, 8, 9], 10, true);
-  player.animations.add("up", [10, 11, 12, 13, 14], 10, true);
-  player.animations.add("right", [15, 16, 17, 18, 19], 10, true);
-  player.animations.add("down", [0, 1, 2, 3, 4], 10, true);
+
   //random dog animations
-  allDogs.map(dog => dog.animations.play("left", 10, true));
+  // function randomMovement() {
+  //   let dir = Math.ceil(Math.random()*4)
+  //   if (dir === 1) {
+  //      return 'left'
+  //   } else if (dir === 2) {
+  //     return 'right'
+  //   } else if (dir === 3) {
+  //     return 'up'
+  //   } else {
+  //     return 'down'
+  //   }
+  // }
+  allDogs.map(dog => {
+    dog.animations.play('left', 10, true)
+    dog.animations.play("right", 10, true)
+    dog.animations.play("up", 10, true)
+    dog.animations.play("down", 10, true)
+  });
 
   //the player can move
   cursors = game.input.keyboard.createCursorKeys();
@@ -72,9 +93,15 @@ function create() {
 function update() {
    //Reset the players velocity (movement)
   allDogs.map(dog => {
-    dog.x -= 2;
-    if (dog.x < dog.width) {
-      dog.x = game.world.width;
+
+    dog.x -= Math.random()*4;
+    dog.y -= Math.random()*4
+    
+
+    if (dog.x < dog.width || dog.y < dog.height) {
+      dog.x = Math.random()*game.world.width;
+      dog.y = Math.random()*game.world.height;
+      
     }
   });
 
