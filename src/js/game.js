@@ -43,8 +43,7 @@ function create() {
 
   //random dog generator - generates all dogs on doggo spritesheet
   function randomDogGenerator(name) {
-    let dog = dogs.game.add.sprite(game.world.randomX, game.world.randomY, name, 1);
-    //dog.body.immovable = true;
+    let dog = dogs.create(game.world.randomX, game.world.randomY, name, 1);
     dog.animations.add("down", [0, 1, 2], 10, true);
     dog.animations.add("left", [3, 4, 5], 10, true);
     dog.animations.add("right", [6, 7, 8], 10, true);
@@ -62,28 +61,6 @@ function create() {
   let white = randomDogGenerator("white");
   allDogs = [choco, brown, black, drkbrown, grey, ltgrey, tan, white];
 
-  //add animations to random dog generations (but make them run on a loop?)
-
-  //random dog animations
-  // function randomMovement() {
-  //   let dir = Math.ceil(Math.random()*4)
-  //   if (dir === 1) {
-  //      return 'left'
-  //   } else if (dir === 2) {
-  //     return 'right'
-  //   } else if (dir === 3) {
-  //     return 'up'
-  //   } else {
-  //     return 'down'
-  //   }
-  // }
-  allDogs.map(dog => {
-    dog.animations.play('left', 10, true)
-    dog.animations.play("right", 10, true)
-    dog.animations.play("up", 10, true)
-    dog.animations.play("down", 10, true)
-  });
-
   //the player can move
   cursors = game.input.keyboard.createCursorKeys();
 
@@ -92,17 +69,25 @@ function create() {
 
 function update() {
    //Reset the players velocity (movement)
-  allDogs.map(dog => {
+  allDogs.map((dog,i) => {
+    if (i%2===0) {
+      dog.x -= 2;
+      dog.animations.play("left", 10, true);
+      if (dog.x <= 0) {
+        dog.x = game.world.width;
+        dog.y = game.world.randomY
+      }
 
-    dog.x -= Math.random()*4;
-    dog.y -= Math.random()*4
+    } else {
+      dog.x += 2;
+      dog.animations.play("right", 10, true);
+      if (dog.x >= game.world.width) {
+        dog.x = 1;
+        dog.y = game.world.randomY
+      }
+    }
     
 
-    if (dog.x < dog.width || dog.y < dog.height) {
-      dog.x = Math.random()*game.world.width;
-      dog.y = Math.random()*game.world.height;
-      
-    }
   });
 
   player.body.velocity.x = 0;
