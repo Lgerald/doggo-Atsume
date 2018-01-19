@@ -8,7 +8,7 @@ const game = new Phaser.Game(800, 600, Phaser.AUTO, "", {
 
 function preload() {
   game.load.image("original", "assets/original-style.png");
-  game.load.spritesheet("doggos", "assets/blackDogg.png", 47, 44.5);
+  game.load.spritesheet("person", "assets/person.png", 31, 32.5);
   game.load.spritesheet("brown", "assets/brownDogg.png", 47, 44.5);
   game.load.spritesheet("choco", "assets/chocoDogg.png", 47, 44.5);
   game.load.spritesheet("black", "assets/blackDogg.png", 47, 44.5);
@@ -26,7 +26,7 @@ function create() {
   //add dog groups
   dogs = game.add.group();
   //add player (but find a new one)
-  player = game.add.sprite(32, game.world.height - 150, "doggos");
+  player = game.add.sprite(32, game.world.height - 150, "person");
   //enable physics for player and dogs
   game.physics.enable(player);
   game.physics.enable(dogs);
@@ -56,16 +56,17 @@ function create() {
   console.log("example?");
   //dogs.map(dog => dog.body.collideWorldBounds = true);
   //add animations for each dog
-  player.animations.add("left", [3, 4, 5], 10, true);
-  player.animations.add("right", [6, 7, 8], 10, true);
-  player.animations.add("up", [9, 10, 11], 10, true);
-  player.animations.add("down", [0, 1, 2], 10, true);
+  player.animations.add("left", [5, 6, 7, 8, 9], 10, true);
+  player.animations.add("up", [10, 11, 12, 13, 14], 10, true);
+  player.animations.add("right", [15, 16, 17, 18, 19], 10, true);
+  player.animations.add("down", [0, 1, 2, 3, 4], 10, true);
+  //random dog animations
   allDogs.map(dog => dog.animations.play("left", 10, true));
 
   //the player can move
   cursors = game.input.keyboard.createCursorKeys();
 
-  //the dogs will move randomly? add a loop???
+
 }
 
 function update() {
