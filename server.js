@@ -8,15 +8,17 @@ const server = app.listen(PORT, function() {
     console.log(`listening on port ${PORT}`)
 })
 
-const io = socketio(server)
+const io = socketio(server, {
+  serveClient: false,
+  wsEngine: "ws" // uws is not supported since it is a native module
+});
 
-io.on('connection', socket => {
-    console.log('a new client is connected!')
-    console.log(socket.id)
-    socket.on('disconnect', () => {
-        console.log("byeeee")
-    })
-})
+io.on("connect", onConnect);
 
+
+function onConnect(socket) {
+  console.log("connect " + socket.id)
+  socket.on("disconnect", () => console.log("disconnected " + socket.id));
+}
 
 app.use(express.static(path.join(__dirname, 'public')))

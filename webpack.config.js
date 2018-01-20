@@ -38,7 +38,7 @@ module.exports = {
     alias: {
       'phaser': phaser,
       'pixi.js': pixi,
-      'p2': p2
+      'p2': p2,
     }
   }
 }
