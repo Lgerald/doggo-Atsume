@@ -86,11 +86,16 @@ function update() {
    //Reset the players velocity (movement)
   
   allDogs.map((dog,i) => {
+    if (dog.alive === false) {
+      dog.revive()
+      dog.x = game.world.randomX
+      dog.y = game.world.randomY
+    }
     if (i%2===0) {
       dog.x -= 2;
       dog.body.velocity = 0
       dog.animations.play("left", 10, true);
-      game.physics.arcade.collide(dog, player);
+      //game.physics.arcade.collide(dog, player);
       if (dog.x <= 0) {
         dog.x = game.world.width;
         dog.y = game.world.randomY
@@ -101,7 +106,7 @@ function update() {
       dog.x += 2;
       dog.body.velocity = 0;
       dog.animations.play("right", 10, true);
-      game.physics.arcade.collide(dog, player);
+      //game.physics.arcade.collide(dog, player);
       if (dog.x >= game.world.width) {
         dog.x = 1;
         dog.y = game.world.randomY
