@@ -72,25 +72,33 @@ function create() {
 
 
 }
-
-function collectDoggo (player, doggo) {
-  //removes dog from screen
-  doggo.kill()
-  //updates score
-  score += 1
-  scoreText.text = `${player.name} Score: ${score}`
-
+function collectDoggo(player, doggo) {
+  if (!player.hasOverlapped && !doggo.hasOverlapped) {
+    player.hasOverlapped = doggo.hasOverlapped = true;
+    doggo.kill();
+    //updates score
+    score += 1;
+    scoreText.text = `${player.name} Score: ${score}`;
+  } else {
+    player.hasOverlapped = doggo.hasOverlapped = false;
+  }
 }
+
 
 function update() {
    //Reset the players velocity (movement)
   
   allDogs.map((dog,i) => {
+    if (dog.alive === false) {
+      dog.revive()
+      dog.x = game.world.randomX
+      dog.y = game.world.randomY
+    }
     if (i%2===0) {
       dog.x -= 2;
       dog.body.velocity = 0
       dog.animations.play("left", 10, true);
-      game.physics.arcade.collide(dog, player);
+      //game.physics.arcade.collide(dog, player);
       if (dog.x <= 0) {
         dog.x = game.world.width;
         dog.y = game.world.randomY
@@ -101,7 +109,7 @@ function update() {
       dog.x += 2;
       dog.body.velocity = 0;
       dog.animations.play("right", 10, true);
-      game.physics.arcade.collide(dog, player);
+      //game.physics.arcade.collide(dog, player);
       if (dog.x >= game.world.width) {
         dog.x = 1;
         dog.y = game.world.randomY
