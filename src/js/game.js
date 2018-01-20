@@ -19,6 +19,8 @@ function preload() {
   game.load.spritesheet("white", "assets/whiteDogg.png", 47, 44.5);
 }
 let dogs, player, allDogs, cursors, scoreText, inputName
+let playerName = prompt("please enter your name", "name")
+localStorage.setItem("playerName", playerName)
 let score = 0
 function create() {
   
@@ -31,7 +33,7 @@ function create() {
   dogs.enableBody = true
   //add player (but find a new one)
   player = game.add.sprite(32, game.world.height - 150, "person");
-  player.name = "player1"
+  player.name = localStorage.getItem("playerName")
   //enable physics for player and dogs
   
   game.physics.arcade.enable(player);
