@@ -6,13 +6,12 @@ import 'phaser'
 import game from './game'
 
 
-const socket = io.connect()
+const socket = io(window.location.origin);
 
-socket.on("connection", () =>
+socket.on("connect", () =>  {
   console.log("I have made a persistent two-way connection to the server!")
+  console.log("game??", game)
+}
 );
 
-socket.on("game", (game) => {
-    console.log("emitting game?")
-    socket.broadcast.emit(game)
-})
+
