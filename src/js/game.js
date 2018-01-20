@@ -72,15 +72,18 @@ function create() {
 
 
 }
-
-function collectDoggo (player, doggo) {
-  //removes dog from screen
-  doggo.kill()
-  //updates score
-  score += 1
-  scoreText.text = `${player.name} Score: ${score}`
-
+function collectDoggo(player, doggo) {
+  if (!player.hasOverlapped && !doggo.hasOverlapped) {
+    player.hasOverlapped = doggo.hasOverlapped = true;
+    doggo.kill();
+    //updates score
+    score += 1;
+    scoreText.text = `${player.name} Score: ${score}`;
+  } else {
+    player.hasOverlapped = doggo.hasOverlapped = false;
+  }
 }
+
 
 function update() {
    //Reset the players velocity (movement)
