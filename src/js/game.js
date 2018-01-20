@@ -18,19 +18,24 @@ function preload() {
   game.load.spritesheet("tan", "assets/tanDogg.png", 47, 44.5);
   game.load.spritesheet("white", "assets/whiteDogg.png", 47, 44.5);
 }
-let dogs, player, allDogs, cursors
+let dogs, player, allDogs, cursors, scoreText, inputName
+let score = 0
 function create() {
+  
+  game.physics.startSystem(Phaser.Physics.ARCADE);
   //set game board
   game.add.sprite(0, 0, "original");
-
+  
   //add dog groups
   dogs = game.add.group();
+  dogs.enableBody = true
   //add player (but find a new one)
   player = game.add.sprite(32, game.world.height - 150, "person");
+  player.name = "player1"
   //enable physics for player and dogs
-  game.physics.startSystem(Phaser.Physics.ARCADE);
-  game.physics.enable(player);
-  game.physics.enable(dogs);
+  
+  game.physics.arcade.enable(player);
+  game.physics.arcade.enable(dogs);
   player.body.collideWorldBounds = true;
 
 
@@ -44,12 +49,6 @@ function create() {
   //random dog generator - generates all dogs on doggo spritesheet
   function randomDogGenerator(name) {
     let dog = dogs.create(game.world.randomX, game.world.randomY, name, 1);
-    game.physics.enable(dog)
-    dog.body.immovable = true
-    dog.body.checkCollision.left = true;
-    dog.body.checkCollision.right = true;
-    dog.body.checkCollision.up = true;
-    dog.body.checkCollision.down = true;
     dog.animations.add("down", [0, 1, 2], 10, true);
     dog.animations.add("left", [3, 4, 5], 10, true);
     dog.animations.add("right", [6, 7, 8], 10, true);
@@ -67,18 +66,29 @@ function create() {
   let white = randomDogGenerator("white");
   allDogs = [choco, brown, black, drkbrown, grey, ltgrey, tan, white];
 
+  scoreText = game.add.text(16,16, `${player.name} Score: ${score}`, { fontSize: '32px', fill: '#000' })
   //the player can move
   cursors = game.input.keyboard.createCursorKeys();
 
 
 }
 
+function collectDoggo (player, doggo) {
+  //removes dog from screen
+  doggo.kill()
+  //updates score
+  score += 1
+  scoreText.text = `${player.name} Score: ${score}`
+
+}
+
 function update() {
    //Reset the players velocity (movement)
-
+  
   allDogs.map((dog,i) => {
     if (i%2===0) {
       dog.x -= 2;
+      dog.body.velocity = 0
       dog.animations.play("left", 10, true);
       game.physics.arcade.collide(dog, player);
       if (dog.x <= 0) {
@@ -87,7 +97,9 @@ function update() {
       }
 
     } else {
+
       dog.x += 2;
+      dog.body.velocity = 0;
       dog.animations.play("right", 10, true);
       game.physics.arcade.collide(dog, player);
       if (dog.x >= game.world.width) {
@@ -98,6 +110,8 @@ function update() {
     
 
   });
+
+  game.physics.arcade.overlap(player, dogs, collectDoggo, null, this)
 
   player.body.velocity.x = 0;
   player.body.velocity.y = 0;
