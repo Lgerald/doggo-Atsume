@@ -4,7 +4,15 @@ const game = new Phaser.Game(800, 600, Phaser.AUTO, "", {
   update: update
 });
 
-function preload() {
+game.state.add("Game", Game);
+game.state.start("Game");
+var Game = {};
+
+Game.init = function(){
+  game.stage.disableVisabilityChange = true
+}
+
+Game.preload = function()  {
   game.load.image("original", "assets/original-style.png");
   game.load.spritesheet("person", "assets/person.png", 31, 32.5);
   game.load.spritesheet("brown", "assets/brownDogg.png", 47, 44.5);
@@ -20,7 +28,7 @@ let dogs, player, allDogs, cursors, scoreText, inputName
 let playerName = prompt("please enter your name", "name")
 localStorage.setItem("playerName", playerName)
 let score = 0
-function create() {
+Game.create = function () {
   
   game.physics.startSystem(Phaser.Physics.ARCADE);
   //set game board
@@ -85,7 +93,7 @@ function collectDoggo(player, doggo) {
 }
 
 
-function update() {
+Game.update = function () {
    //Reset the players velocity (movement)
   
   allDogs.map((dog,i) => {
@@ -145,3 +153,4 @@ function update() {
     player.frame = 1;
   }
 }
+

@@ -13,7 +13,8 @@ const io = socketio(server, {
   wsEngine: "ws" // uws is not supported since it is a native module
 });
 
-io.on("connect", onConnect);
+io.on("connection", onConnect);
+
 
 
 function onConnect(socket) {
