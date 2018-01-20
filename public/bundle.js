@@ -3538,14 +3538,21 @@ __webpack_require__(52);
 
 __webpack_require__(54);
 
-__webpack_require__(56);
+var _game = __webpack_require__(56);
+
+var _game2 = _interopRequireDefault(_game);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var socket = (0, _socket2.default)(window.location.origin);
 
-socket.on("connect", function () {
-  return console.log("I have made a persistent two-way connection to the server!");
+socket.on("connection", function () {
+    return console.log("I have made a persistent two-way connection to the server!");
+});
+
+socket.on("game", function (game) {
+    console.log("emitting game?");
+    socket.broadcast.emit(game);
 });
 
 /***/ }),
@@ -110414,6 +110421,9 @@ PIXI.TextureSilentFail = true;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var game = new Phaser.Game(800, 600, Phaser.AUTO, "", {
   preload: preload,
   create: create,
@@ -110559,6 +110569,8 @@ function update() {
     player.frame = 1;
   }
 }
+
+exports.default = game;
 
 /***/ })
 /******/ ]);
