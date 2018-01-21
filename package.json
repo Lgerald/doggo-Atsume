@@ -1,11 +1,12 @@
 {
-  "name": "simple-react",
+  "name": "doggo-atsume",
   "version": "1.0.0",
-  "description": "",
+  "description": "like neko-atsume, except with dogs!",
   "main": "index.js",
   "scripts": {
     "start": "webpack & nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "deploy"
   },
   "author": "",
   "license": "ISC",
