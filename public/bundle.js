@@ -104089,8 +104089,9 @@ function preload() {
       wordColor = "#000";
       break;
   }
-  //player
-  game.load.spritesheet("person", "assets/person.png", 31, 32.5);
+  //player1 + 2
+  game.load.spritesheet("person", "assets/bulbasaur.png", 64, 64);
+  game.load.spritesheet("person2", "assets/pikachu.png", 64, 64);
   //the horde
   game.load.spritesheet("dogHorde", 'assets/misc/doghorde.png', 362, 74);
   //bandana
@@ -104120,15 +104121,18 @@ function preload() {
 }
 var dogs = void 0,
     player = void 0,
+    player2 = void 0,
     allDogs = void 0,
+    cursors2 = void 0,
     cursors = void 0,
     scoreText = void 0,
-    inputName = void 0,
-    dogNameList = void 0,
+    scoreText2 = void 0,
     doghorde = void 0,
     welcome = void 0,
-    wordColor = void 0;
+    wordColor = void 0,
+    wasd = void 0;
 var score = 0;
+var score2 = 0;
 function create() {
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -104140,19 +104144,26 @@ function create() {
   dogs = game.add.group();
   dogs.enableBody = true;
   //add player (but find a new one)
-  player = game.add.sprite(32, game.world.height - 150, "person");
+  player = game.add.sprite(16, 80, "person");
+  player2 = game.add.sprite(270, 80, "person2");
   //enable physics for player and dogs
   game.physics.enable(doghorde);
   game.physics.arcade.enable(player);
+  game.physics.arcade.enable(player2);
   game.physics.arcade.enable(dogs);
   player.body.collideWorldBounds = true;
+  player2.body.collideWorldBounds = true;
 
-  //dogs.map(dog => dog.body.collideWorldBounds = true);
-  //add animations for each dog
-  player.animations.add("left", [5, 6, 7, 8, 9], 10, true);
-  player.animations.add("up", [10, 11, 12, 13, 14], 10, true);
-  player.animations.add("right", [15, 16, 17, 18, 19], 10, true);
-  player.animations.add("down", [0, 1, 2, 3, 4], 10, true);
+  //add animations for players
+  player.animations.add("left", [4, 5, 6, 7], 10, true);
+  player.animations.add("up", [12, 13, 14, 15], 10, true);
+  player.animations.add("right", [8, 9, 10, 11], 10, true);
+  player.animations.add("down", [0, 1, 2, 3], 10, true);
+
+  player2.animations.add("left", [4, 5, 6, 7], 10, true);
+  player2.animations.add("up", [12, 13, 14, 15], 10, true);
+  player2.animations.add("right", [8, 9, 10, 11], 10, true);
+  player2.animations.add("down", [0, 1, 2, 3], 10, true);
 
   //random dog generator - generates all dogs on doggo spritesheet
   function randomDogGenerator(name) {
@@ -104222,22 +104233,41 @@ function create() {
   allDogs = [stbernard1, stbernard2, stbernard3, stbernard4, stbernard5, stbernard6, stbernard7, stbernard8, schauz1, schauz2, schauz3, schauz4, schauz5, schauz6, schauz7, schauz8, retreiver1, retreiver2, retreiver3, retreiver4, retreiver5, retreiver6, retreiver7, retreiver8, pom1, pom2, pom3, pom4, pom5, pom6, pom7, pom8, corgi1, corgi2, corgi3, corgi4, corgi5, corgi6, corgi7, corgi8, bandana1, bandana2, bandana3, bandana4, bandana5, bandana6, bandana7, bandana8];
 
   scoreText = game.add.text(16, 16, "Doggos: " + score, { fontSize: '32px', fill: wordColor });
-  welcome = game.add.text(doghorde.x - 30, doghorde.y, "COLLECT ALL THE DOGS", {
+  scoreText2 = game.add.text(270, 16, "Doggos2: " + score2, {
     fontSize: "32px",
-    fill: "#FFF"
-  });
+    fill: wordColor });
+
   //the player can move
   cursors = game.input.keyboard.createCursorKeys();
+  cursors2 = game.input.keyboard.createCursorKeys();
+
+  cursors2.wasd = {
+    up2: game.input.keyboard.addKey(Phaser.Keyboard.W),
+    down2: game.input.keyboard.addKey(Phaser.Keyboard.S),
+    left2: game.input.keyboard.addKey(Phaser.Keyboard.A),
+    right2: game.input.keyboard.addKey(Phaser.Keyboard.D)
+  };
 }
-function collectDoggo(player, doggo) {
+function collectDoggo1(player, doggo) {
   if (!player.hasOverlapped && !doggo.hasOverlapped) {
     player.hasOverlapped = doggo.hasOverlapped = true;
     doggo.kill();
     //updates score
     score += 1;
-    scoreText.text = player.name + " Score: " + score;
+    scoreText.text = "Doggos: " + score;
   } else {
     player.hasOverlapped = doggo.hasOverlapped = false;
+  }
+}
+function collectDoggo2(player2, doggo) {
+  if (!player2.hasOverlapped && !doggo.hasOverlapped) {
+    player2.hasOverlapped = doggo.hasOverlapped = true;
+    doggo.kill();
+    //updates score
+    score2 += 1;
+    scoreText2.text = "Doggos2: " + score2;
+  } else {
+    player2.hasOverlapped = doggo.hasOverlapped = false;
   }
 }
 
@@ -104277,8 +104307,8 @@ function update() {
     }
   });
 
-  game.physics.arcade.overlap(player, dogs, collectDoggo, null, this);
-
+  game.physics.arcade.overlap(player, dogs, collectDoggo1, null, this);
+  //player 1 controls
   player.body.velocity.x = 0;
   player.body.velocity.y = 0;
   if (cursors.left.isDown) {
@@ -104301,6 +104331,32 @@ function update() {
     //  Stand still
     player.animations.stop();
     player.frame = 1;
+  }
+
+  game.physics.arcade.overlap(player2, dogs, collectDoggo2, null, this);
+  //player 2 controls
+  player2.body.velocity.x = 0;
+  player2.body.velocity.y = 0;
+  if (cursors2.wasd.left2.isDown) {
+    //  Move to the left
+    player2.body.velocity.x = -150;
+    player2.animations.play("left");
+  } else if (cursors2.wasd.right2.isDown) {
+    //  Move to the right
+    player2.body.velocity.x = 150;
+    player2.animations.play("right");
+  } else if (cursors2.wasd.up2.isDown) {
+    //move up
+    player2.body.velocity.y = -150;
+    player2.animations.play("up");
+  } else if (cursors2.wasd.down2.isDown) {
+    //move down
+    player2.body.velocity.y = 150;
+    player2.animations.play("down");
+  } else {
+    //  Stand still
+    player2.animations.stop();
+    player2.frame = 1;
   }
 }
 
