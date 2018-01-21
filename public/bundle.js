@@ -104254,7 +104254,7 @@ function collectDoggo1(player, doggo) {
     doggo.kill();
     //updates score
     score += 1;
-    scoreText.text = "Doggos: " + score;
+    scoreText.text = "P1 score: " + score;
   } else {
     player.hasOverlapped = doggo.hasOverlapped = false;
   }
@@ -104265,7 +104265,7 @@ function collectDoggo2(player2, doggo) {
     doggo.kill();
     //updates score
     score2 += 1;
-    scoreText2.text = "Doggos2: " + score2;
+    scoreText2.text = "P2 score: " + score2;
   } else {
     player2.hasOverlapped = doggo.hasOverlapped = false;
   }
