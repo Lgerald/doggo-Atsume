@@ -110425,13 +110425,61 @@ var game = new Phaser.Game(470, 470, Phaser.AUTO, "", {
 
 function preload() {
   //background
-  if (Math.ceil(Math.random() * 2) === 1) {
-    game.load.image("original", "assets/background/tacos.png");
-  } else {
-    game.load.image("original", "assets/background/pizza.png");
+  var which = Math.ceil(Math.random() * 12);
+  switch (which) {
+    case 1:
+      game.load.image("original", "assets/background/bassethound.png");
+      wordColor = "#000";
+      break;
+    case 2:
+      game.load.image("original", "assets/background/bulldog.png");
+      wordColor = "#FFF";
+      break;
+    case 3:
+      game.load.image("original", "assets/background/chihaha.png");
+      wordColor = "#000";
+      break;
+    case 4:
+      game.load.image("original", "assets/background/corgikayak.png");
+      wordColor = "#000";
+      break;
+    case 5:
+      game.load.image("original", "assets/background/hotdog.png");
+      wordColor = "#FFF";
+      break;
+    case 6:
+      game.load.image("original", "assets/background/scottiPJ.png");
+      wordColor = "#000";
+      break;
+    case 7:
+      game.load.image("original", "assets/background/sheltie.png");
+      wordColor = "#000";
+      break;
+    case 8:
+      game.load.image("original", "assets/background/shitzu.png");
+      wordColor = "#000";
+      break;
+    case 9:
+      game.load.image("original", "assets/background/stbernard.png");
+      wordColor = "#FFF";
+      break;
+    case 10:
+      game.load.image("original", "assets/background/valentine.png");
+      wordColor = "#000";
+      break;
+    case 11:
+      game.load.image("original", "assets/background/wirecoffee.png");
+      wordColor = "#000";
+      break;
+    default:
+      game.load.image("original", "assets/background/pugdonut.png");
+      wordColor = "#000";
+      break;
   }
   //player
   game.load.spritesheet("person", "assets/person.png", 31, 32.5);
+  //the horde
+  game.load.spritesheet("dogHorde", 'assets/misc/doghorde.png', 362, 74);
   //bandana
   for (var i = 1; i <= 8; i++) {
     game.load.spritesheet("bandana" + i, "assets/bandana/bandana" + i + ".png", 48.3, 45.75);
@@ -110452,8 +110500,6 @@ function preload() {
   for (var _i4 = 1; _i4 <= 8; _i4++) {
     game.load.spritesheet("schauz" + _i4, "assets/schnauzer/schauz" + _i4 + ".png", 47, 44.5);
   }
-  //   //shiba
-  //   // game.load.spritesheet(`shiba1`, `assets/shiba/shiba${i}.png`, 91, 95);
   //stBernard
   for (var _i5 = 1; _i5 <= 8; _i5++) {
     game.load.spritesheet("stbernard" + _i5, "assets/stBernard/stbernard" + _i5 + ".png", 48, 48);
@@ -110465,7 +110511,10 @@ var dogs = void 0,
     cursors = void 0,
     scoreText = void 0,
     inputName = void 0,
-    dogNameList = void 0;
+    dogNameList = void 0,
+    doghorde = void 0,
+    welcome = void 0,
+    wordColor = void 0;
 var playerName = prompt("please enter your name", "name");
 localStorage.setItem("playerName", playerName);
 var score = 0;
@@ -110474,7 +110523,8 @@ function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
   //set game board
   game.add.sprite(0, 0, "original");
-
+  doghorde = game.add.sprite(-500, game.world.randomY, 'dogHorde');
+  doghorde.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47], 10, true);
   //add dog groups
   dogs = game.add.group();
   dogs.enableBody = true;
@@ -110482,7 +110532,7 @@ function create() {
   player = game.add.sprite(32, game.world.height - 150, "person");
   player.name = localStorage.getItem("playerName");
   //enable physics for player and dogs
-
+  game.physics.enable(doghorde);
   game.physics.arcade.enable(player);
   game.physics.arcade.enable(dogs);
   player.body.collideWorldBounds = true;
@@ -110561,7 +110611,11 @@ function create() {
 
   allDogs = [stbernard1, stbernard2, stbernard3, stbernard4, stbernard5, stbernard6, stbernard7, stbernard8, schauz1, schauz2, schauz3, schauz4, schauz5, schauz6, schauz7, schauz8, retreiver1, retreiver2, retreiver3, retreiver4, retreiver5, retreiver6, retreiver7, retreiver8, pom1, pom2, pom3, pom4, pom5, pom6, pom7, pom8, corgi1, corgi2, corgi3, corgi4, corgi5, corgi6, corgi7, corgi8, bandana1, bandana2, bandana3, bandana4, bandana5, bandana6, bandana7, bandana8];
 
-  scoreText = game.add.text(16, 16, player.name + " Score: " + score, { fontSize: '32px', fill: '#000' });
+  scoreText = game.add.text(16, 16, player.name + " Score: " + score, { fontSize: '32px', fill: wordColor });
+  welcome = game.add.text(doghorde.x - 30, doghorde.y, "COLLECT ALL THE DOGS", {
+    fontSize: "32px",
+    fill: "#FFF"
+  });
   //the player can move
   cursors = game.input.keyboard.createCursorKeys();
 }
@@ -110579,7 +110633,11 @@ function collectDoggo(player, doggo) {
 
 function update() {
   //Reset the players velocity (movement)
-  console.log("alldogs?", allDogs);
+
+  doghorde.x += 2;
+  doghorde.body.velocity = 0;
+  doghorde.animations.play('right', 10, true);
+
   allDogs.map(function (dog, i) {
 
     if (dog.alive === false) {
