@@ -13,30 +13,30 @@ function preload() {
   }
   //player
   game.load.spritesheet("person", "assets/person.png", 31, 32.5);
+  //the horde
+  game.load.spritesheet("dogHorde", 'assets/misc/doghorde.png', NUM, NUM)
   //bandana
-  for (let i = 1; i < 8; i++) {
+  for (let i = 1; i <= 8; i++) {
     game.load.spritesheet(`bandana${i}`, `assets/bandana/bandana${i}.png`, 48.3, 45.75);
   }
   //corgi
-  for (let i = 1; i < 8; i++) {
+  for (let i = 1; i <= 8; i++) {
     game.load.spritesheet(`corgi${i}`, `assets/corgi/corgi${i}.png`, 48, 45);
   }
   //pomeranians
-  for (let i = 1; i < 8; i++) {
+  for (let i = 1; i <= 8; i++) {
     game.load.spritesheet(`pom${i}`, `assets/pomeranian/pom${i}.png`, 43.3, 45);
   }
   //retreivers
-  for (let i = 1; i < 8; i++) {
-    game.load.spritesheet(`retriever${i}`, `assets/retriever/retriever${i}.png`, 48.67, 46);
+  for (let i = 1; i <= 8; i++) {
+    game.load.spritesheet(`retreiver${i}`, `assets/retriever/retriever${i}.png`, 46, 48.67);
   }
   //schnauzers
-  for (let i = 1; i < 8; i++) {
-    game.load.spritesheet(`schauz${i}`, `assets/schnauzer/schauz${i}.png`, 47, 44.5)
+  for (let i = 1; i <= 8; i++) {
+    game.load.spritesheet(`schauz${i}`, `assets/schnauzer/schauz${i}.png`, 47, 44.5);
   }
-  //shiba
-  // game.load.spritesheet(`shiba1`, `assets/shiba/shiba${i}.png`, 91, 95);
   //stBernard
-  for (let i = 1; i < 8; i++) {
+  for (let i = 1; i <= 8; i++) {
     game.load.spritesheet(`stbernard${i}`, `assets/stBernard/stbernard${i}.png`, 48, 48);
   }
 }
@@ -72,16 +72,16 @@ function create() {
 
   //random dog generator - generates all dogs on doggo spritesheet
   function randomDogGenerator(name) {
-    let dog = dogs.create(game.world.randomX, game.world.randomY, name, 1);
-    dog.animations.add("down", [0, 1, 2], 10, true);
+   let dog = dogs.create(game.world.randomX, game.world.randomY, name, 1);
+    //dog.animations.add("down", [0, 1, 2], 10, true);
     dog.animations.add("left", [3, 4, 5], 10, true);
     dog.animations.add("right", [6, 7, 8], 10, true);
-    dog.animations.add("up", [9, 10, 11], 10, true);
- 
+    //dog.animations.add("up", [9, 10, 11], 10, true);
+    return dog
   }
   //generate all the dogs (please say this is possible)
-  dogNameList = ["",'bandana', 'corgi', 'pom', 'retreiver', 'schnauz', 'stbernard']
-  let bandana1 = randomDogGenerator('bandana1')
+  //dogNameList = ["",'bandana', 'corgi', 'pom', 'retreiver', 'schnauz', 'stbernard']
+  let bandana1 = randomDogGenerator("bandana1")
   let bandana2 = randomDogGenerator("bandana2");
   let bandana3 = randomDogGenerator("bandana3");
   let bandana4 = randomDogGenerator("bandana4");
@@ -115,7 +115,7 @@ function create() {
   let retreiver5 = randomDogGenerator("retreiver5");
   let retreiver6 = randomDogGenerator("retreiver6");
   let retreiver7 = randomDogGenerator("retreiver7");
-  let retreiver8 = randomDogGenerator("retreiver1");
+  let retreiver8 = randomDogGenerator("retreiver8");
 
   let schauz1 = randomDogGenerator("schauz1");
   let schauz2 = randomDogGenerator("schauz2");
@@ -135,7 +135,7 @@ function create() {
   let stbernard7 = randomDogGenerator("stbernard7");
   let stbernard8 = randomDogGenerator("stbernard8");
 
-  allDogs = [corgi1, corgi2, corgi3, corgi4, corgi5, corgi6, corgi7, corgi8, bandana1, bandana2, bandana3, bandana4, bandana5, bandana6, bandana7, bandana8];
+  allDogs = [stbernard1, stbernard2, stbernard3, stbernard4, stbernard5, stbernard6, stbernard7, stbernard8, schauz1, schauz2, schauz3, schauz4, schauz5, schauz6, schauz7, schauz8, retreiver1, retreiver2, retreiver3, retreiver4, retreiver5, retreiver6, retreiver7, retreiver8, pom1, pom2, pom3, pom4, pom5, pom6, pom7, pom8, corgi1, corgi2, corgi3, corgi4, corgi5, corgi6, corgi7, corgi8, bandana1, bandana2, bandana3, bandana4, bandana5, bandana6, bandana7, bandana8];
 
 
   scoreText = game.add.text(16,16, `${player.name} Score: ${score}`, { fontSize: '32px', fill: '#000' })
@@ -159,8 +159,8 @@ function collectDoggo(player, doggo) {
 
 function update() {
    //Reset the players velocity (movement)
-  
   allDogs.map((dog,i) => {
+
     if (dog.alive === false) {
       dog.revive()
       dog.x = game.world.randomX
@@ -187,9 +187,7 @@ function update() {
         dog.y = game.world.randomY
       }
     }
-    
-
-  });
+  })
 
   game.physics.arcade.overlap(player, dogs, collectDoggo, null, this)
 

@@ -110433,29 +110433,29 @@ function preload() {
   //player
   game.load.spritesheet("person", "assets/person.png", 31, 32.5);
   //bandana
-  for (var i = 1; i < 8; i++) {
+  for (var i = 1; i <= 8; i++) {
     game.load.spritesheet("bandana" + i, "assets/bandana/bandana" + i + ".png", 48.3, 45.75);
   }
   //corgi
-  for (var _i = 1; _i < 8; _i++) {
+  for (var _i = 1; _i <= 8; _i++) {
     game.load.spritesheet("corgi" + _i, "assets/corgi/corgi" + _i + ".png", 48, 45);
   }
   //pomeranians
-  for (var _i2 = 1; _i2 < 8; _i2++) {
+  for (var _i2 = 1; _i2 <= 8; _i2++) {
     game.load.spritesheet("pom" + _i2, "assets/pomeranian/pom" + _i2 + ".png", 43.3, 45);
   }
   //retreivers
-  for (var _i3 = 1; _i3 < 8; _i3++) {
-    game.load.spritesheet("retriever" + _i3, "assets/retriever/retriever" + _i3 + ".png", 48.67, 46);
+  for (var _i3 = 1; _i3 <= 8; _i3++) {
+    game.load.spritesheet("retreiver" + _i3, "assets/retriever/retriever" + _i3 + ".png", 46, 48.67);
   }
   //schnauzers
-  for (var _i4 = 1; _i4 < 8; _i4++) {
+  for (var _i4 = 1; _i4 <= 8; _i4++) {
     game.load.spritesheet("schauz" + _i4, "assets/schnauzer/schauz" + _i4 + ".png", 47, 44.5);
   }
-  //shiba
-  // game.load.spritesheet(`shiba1`, `assets/shiba/shiba${i}.png`, 91, 95);
+  //   //shiba
+  //   // game.load.spritesheet(`shiba1`, `assets/shiba/shiba${i}.png`, 91, 95);
   //stBernard
-  for (var _i5 = 1; _i5 < 8; _i5++) {
+  for (var _i5 = 1; _i5 <= 8; _i5++) {
     game.load.spritesheet("stbernard" + _i5, "assets/stBernard/stbernard" + _i5 + ".png", 48, 48);
   }
 }
@@ -110497,14 +110497,15 @@ function create() {
   //random dog generator - generates all dogs on doggo spritesheet
   function randomDogGenerator(name) {
     var dog = dogs.create(game.world.randomX, game.world.randomY, name, 1);
-    dog.animations.add("down", [0, 1, 2], 10, true);
+    //dog.animations.add("down", [0, 1, 2], 10, true);
     dog.animations.add("left", [3, 4, 5], 10, true);
     dog.animations.add("right", [6, 7, 8], 10, true);
-    dog.animations.add("up", [9, 10, 11], 10, true);
+    //dog.animations.add("up", [9, 10, 11], 10, true);
+    return dog;
   }
   //generate all the dogs (please say this is possible)
-  dogNameList = ["", 'bandana', 'corgi', 'pom', 'retreiver', 'schnauz', 'stbernard'];
-  var bandana1 = randomDogGenerator('bandana1');
+  //dogNameList = ["",'bandana', 'corgi', 'pom', 'retreiver', 'schnauz', 'stbernard']
+  var bandana1 = randomDogGenerator("bandana1");
   var bandana2 = randomDogGenerator("bandana2");
   var bandana3 = randomDogGenerator("bandana3");
   var bandana4 = randomDogGenerator("bandana4");
@@ -110538,7 +110539,7 @@ function create() {
   var retreiver5 = randomDogGenerator("retreiver5");
   var retreiver6 = randomDogGenerator("retreiver6");
   var retreiver7 = randomDogGenerator("retreiver7");
-  var retreiver8 = randomDogGenerator("retreiver1");
+  var retreiver8 = randomDogGenerator("retreiver8");
 
   var schauz1 = randomDogGenerator("schauz1");
   var schauz2 = randomDogGenerator("schauz2");
@@ -110558,7 +110559,7 @@ function create() {
   var stbernard7 = randomDogGenerator("stbernard7");
   var stbernard8 = randomDogGenerator("stbernard8");
 
-  allDogs = [corgi1, corgi2, corgi3, corgi4, corgi5, corgi6, corgi7, corgi8, bandana1, bandana2, bandana3, bandana4, bandana5, bandana6, bandana7, bandana8];
+  allDogs = [stbernard1, stbernard2, stbernard3, stbernard4, stbernard5, stbernard6, stbernard7, stbernard8, schauz1, schauz2, schauz3, schauz4, schauz5, schauz6, schauz7, schauz8, retreiver1, retreiver2, retreiver3, retreiver4, retreiver5, retreiver6, retreiver7, retreiver8, pom1, pom2, pom3, pom4, pom5, pom6, pom7, pom8, corgi1, corgi2, corgi3, corgi4, corgi5, corgi6, corgi7, corgi8, bandana1, bandana2, bandana3, bandana4, bandana5, bandana6, bandana7, bandana8];
 
   scoreText = game.add.text(16, 16, player.name + " Score: " + score, { fontSize: '32px', fill: '#000' });
   //the player can move
@@ -110578,8 +110579,9 @@ function collectDoggo(player, doggo) {
 
 function update() {
   //Reset the players velocity (movement)
-
+  console.log("alldogs?", allDogs);
   allDogs.map(function (dog, i) {
+
     if (dog.alive === false) {
       dog.revive();
       dog.x = game.world.randomX;
