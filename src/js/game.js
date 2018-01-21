@@ -1,22 +1,46 @@
-const game = new Phaser.Game(800, 600, Phaser.AUTO, "", {
+const game = new Phaser.Game(470, 470, Phaser.AUTO, "", {
   preload: preload,
   create: create,
   update: update
 });
 
 function preload() {
-  game.load.image("original", "assets/original-style.png");
+  //background
+  if (Math.ceil(Math.random() * 2) === 1) {
+    game.load.image("original", "assets/background/tacos.png");
+  } else {
+    game.load.image("original", "assets/background/pizza.png");
+  }
+  //player
   game.load.spritesheet("person", "assets/person.png", 31, 32.5);
-  game.load.spritesheet("brown", "assets/brownDogg.png", 47, 44.5);
-  game.load.spritesheet("choco", "assets/chocoDogg.png", 47, 44.5);
-  game.load.spritesheet("black", "assets/blackDogg.png", 47, 44.5);
-  game.load.spritesheet("drkbrown", "assets/drkbrownDogg.png", 47, 44.5);
-  game.load.spritesheet("grey", "assets/greyDogg.png", 47, 44.5);
-  game.load.spritesheet("lt", "assets/ltgreyDogg.png", 47, 44.5);
-  game.load.spritesheet("tan", "assets/tanDogg.png", 47, 44.5);
-  game.load.spritesheet("white", "assets/whiteDogg.png", 47, 44.5);
+  //bandana
+  for (let i = 1; i < 8; i++) {
+    game.load.spritesheet(`bandana${i}`, `assets/bandana/bandana${i}.png`, 48.3, 45.75);
+  }
+  //corgi
+  for (let i = 1; i < 8; i++) {
+    game.load.spritesheet(`corgi${i}`, `assets/corgi/corgi${i}.png`, 48, 45);
+  }
+  //pomeranians
+  for (let i = 1; i < 8; i++) {
+    game.load.spritesheet(`pom${i}`, `assets/pomeranian/pom${i}.png`, 43.3, 45);
+  }
+  //retreivers
+  for (let i = 1; i < 8; i++) {
+    game.load.spritesheet(`retriever${i}`, `assets/retriever/retriever${i}.png`, 48.67, 46);
+  }
+  //schnauzers
+  for (let i = 1; i < 8; i++) {
+    game.load.spritesheet(`schauz${i}`, `assets/schnauzer/schauz${i}.png`, 47, 44.5)
+  }
+  //shiba
+  // game.load.spritesheet(`shiba1`, `assets/shiba/shiba${i}.png`, 91, 95);
+  //stBernard
+  for (let i = 1; i < 8; i++) {
+    game.load.spritesheet(`stbernard${i}`, `assets/stBernard/stbernard${i}.png`, 48, 48);
+  }
 }
-let dogs, player, allDogs, cursors, scoreText, inputName
+let dogs, player, allDogs, cursors, scoreText, inputName, dogNameList
 let playerName = prompt("please enter your name", "name")
 localStorage.setItem("playerName", playerName)
 let score = 0
@@ -53,18 +77,66 @@ function create() {
     dog.animations.add("left", [3, 4, 5], 10, true);
     dog.animations.add("right", [6, 7, 8], 10, true);
     dog.animations.add("up", [9, 10, 11], 10, true);
-    
-    return dog;
+ 
   }
-  let choco = randomDogGenerator("choco");
-  let brown = randomDogGenerator("brown");
-  let black = randomDogGenerator("black");
-  let drkbrown = randomDogGenerator("drkbrown");
-  let grey = randomDogGenerator("grey");
-  let ltgrey = randomDogGenerator("lt");
-  let tan = randomDogGenerator("tan");
-  let white = randomDogGenerator("white");
-  allDogs = [choco, brown, black, drkbrown, grey, ltgrey, tan, white];
+  //generate all the dogs (please say this is possible)
+  dogNameList = ["",'bandana', 'corgi', 'pom', 'retreiver', 'schnauz', 'stbernard']
+  let bandana1 = randomDogGenerator('bandana1')
+  let bandana2 = randomDogGenerator("bandana2");
+  let bandana3 = randomDogGenerator("bandana3");
+  let bandana4 = randomDogGenerator("bandana4");
+  let bandana5 = randomDogGenerator("bandana5");
+  let bandana6 = randomDogGenerator("bandana6");
+  let bandana7 = randomDogGenerator("bandana7");
+  let bandana8 = randomDogGenerator("bandana8");
+
+  let corgi1 = randomDogGenerator("corgi1");
+  let corgi2 = randomDogGenerator("corgi2");
+  let corgi3 = randomDogGenerator("corgi3");
+  let corgi4 = randomDogGenerator("corgi4");
+  let corgi5 = randomDogGenerator("corgi5");
+  let corgi6 = randomDogGenerator("corgi6");
+  let corgi7 = randomDogGenerator("corgi7");
+  let corgi8 = randomDogGenerator("corgi8");
+
+  let pom1 = randomDogGenerator("pom1");
+  let pom2 = randomDogGenerator("pom2");
+  let pom3 = randomDogGenerator("pom3");
+  let pom4 = randomDogGenerator("pom4");
+  let pom5 = randomDogGenerator("pom5");
+  let pom6 = randomDogGenerator("pom6");
+  let pom7 = randomDogGenerator("pom7");
+  let pom8 = randomDogGenerator("pom8");
+
+  let retreiver1 = randomDogGenerator("retreiver1");
+  let retreiver2 = randomDogGenerator("retreiver2");
+  let retreiver3 = randomDogGenerator("retreiver3");
+  let retreiver4 = randomDogGenerator("retreiver4");
+  let retreiver5 = randomDogGenerator("retreiver5");
+  let retreiver6 = randomDogGenerator("retreiver6");
+  let retreiver7 = randomDogGenerator("retreiver7");
+  let retreiver8 = randomDogGenerator("retreiver1");
+
+  let schauz1 = randomDogGenerator("schauz1");
+  let schauz2 = randomDogGenerator("schauz2");
+  let schauz3 = randomDogGenerator("schauz3");
+  let schauz4 = randomDogGenerator("schauz4");
+  let schauz5 = randomDogGenerator("schauz5");
+  let schauz6 = randomDogGenerator("schauz6");
+  let schauz7 = randomDogGenerator("schauz7");
+  let schauz8 = randomDogGenerator("schauz8");
+  
+  let stbernard1 = randomDogGenerator("stbernard1");
+  let stbernard2 = randomDogGenerator("stbernard2");
+  let stbernard3 = randomDogGenerator("stbernard3");
+  let stbernard4 = randomDogGenerator("stbernard4");
+  let stbernard5 = randomDogGenerator("stbernard5");
+  let stbernard6 = randomDogGenerator("stbernard6");
+  let stbernard7 = randomDogGenerator("stbernard7");
+  let stbernard8 = randomDogGenerator("stbernard8");
+
+  allDogs = [corgi1, corgi2, corgi3, corgi4, corgi5, corgi6, corgi7, corgi8, bandana1, bandana2, bandana3, bandana4, bandana5, bandana6, bandana7, bandana8];
+
 
   scoreText = game.add.text(16,16, `${player.name} Score: ${score}`, { fontSize: '32px', fill: '#000' })
   //the player can move

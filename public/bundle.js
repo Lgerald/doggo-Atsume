@@ -3546,13 +3546,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var socket = (0, _socket2.default)(window.location.origin);
 
-socket.on("connection", function () {
-    return console.log("I have made a persistent two-way connection to the server!");
-});
-
-socket.on("game", function (game) {
-    console.log("emitting game?");
-    socket.broadcast.emit(game);
+socket.on("connect", function () {
+  console.log("I have made a persistent two-way connection to the server!");
+  console.log("game??", _game2.default);
 });
 
 /***/ }),
@@ -110421,33 +110417,55 @@ PIXI.TextureSilentFail = true;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var game = new Phaser.Game(800, 600, Phaser.AUTO, "", {
+var game = new Phaser.Game(470, 470, Phaser.AUTO, "", {
   preload: preload,
   create: create,
   update: update
 });
 
 function preload() {
-  game.load.image("original", "assets/original-style.png");
+  //background
+  if (Math.ceil(Math.random() * 2) === 1) {
+    game.load.image("original", "assets/background/tacos.png");
+  } else {
+    game.load.image("original", "assets/background/pizza.png");
+  }
+  //player
   game.load.spritesheet("person", "assets/person.png", 31, 32.5);
-  game.load.spritesheet("brown", "assets/brownDogg.png", 47, 44.5);
-  game.load.spritesheet("choco", "assets/chocoDogg.png", 47, 44.5);
-  game.load.spritesheet("black", "assets/blackDogg.png", 47, 44.5);
-  game.load.spritesheet("drkbrown", "assets/drkbrownDogg.png", 47, 44.5);
-  game.load.spritesheet("grey", "assets/greyDogg.png", 47, 44.5);
-  game.load.spritesheet("lt", "assets/ltgreyDogg.png", 47, 44.5);
-  game.load.spritesheet("tan", "assets/tanDogg.png", 47, 44.5);
-  game.load.spritesheet("white", "assets/whiteDogg.png", 47, 44.5);
+  //bandana
+  for (var i = 1; i < 8; i++) {
+    game.load.spritesheet("bandana" + i, "assets/bandana/bandana" + i + ".png", 48.3, 45.75);
+  }
+  //corgi
+  for (var _i = 1; _i < 8; _i++) {
+    game.load.spritesheet("corgi" + _i, "assets/corgi/corgi" + _i + ".png", 48, 45);
+  }
+  //pomeranians
+  for (var _i2 = 1; _i2 < 8; _i2++) {
+    game.load.spritesheet("pom" + _i2, "assets/pomeranian/pom" + _i2 + ".png", 43.3, 45);
+  }
+  //retreivers
+  for (var _i3 = 1; _i3 < 8; _i3++) {
+    game.load.spritesheet("retriever" + _i3, "assets/retriever/retriever" + _i3 + ".png", 48.67, 46);
+  }
+  //schnauzers
+  for (var _i4 = 1; _i4 < 8; _i4++) {
+    game.load.spritesheet("schauz" + _i4, "assets/schnauzer/schauz" + _i4 + ".png", 47, 44.5);
+  }
+  //shiba
+  // game.load.spritesheet(`shiba1`, `assets/shiba/shiba${i}.png`, 91, 95);
+  //stBernard
+  for (var _i5 = 1; _i5 < 8; _i5++) {
+    game.load.spritesheet("stbernard" + _i5, "assets/stBernard/stbernard" + _i5 + ".png", 48, 48);
+  }
 }
 var dogs = void 0,
     player = void 0,
     allDogs = void 0,
     cursors = void 0,
     scoreText = void 0,
-    inputName = void 0;
+    inputName = void 0,
+    dogNameList = void 0;
 var playerName = prompt("please enter your name", "name");
 localStorage.setItem("playerName", playerName);
 var score = 0;
@@ -110483,18 +110501,64 @@ function create() {
     dog.animations.add("left", [3, 4, 5], 10, true);
     dog.animations.add("right", [6, 7, 8], 10, true);
     dog.animations.add("up", [9, 10, 11], 10, true);
-
-    return dog;
   }
-  var choco = randomDogGenerator("choco");
-  var brown = randomDogGenerator("brown");
-  var black = randomDogGenerator("black");
-  var drkbrown = randomDogGenerator("drkbrown");
-  var grey = randomDogGenerator("grey");
-  var ltgrey = randomDogGenerator("lt");
-  var tan = randomDogGenerator("tan");
-  var white = randomDogGenerator("white");
-  allDogs = [choco, brown, black, drkbrown, grey, ltgrey, tan, white];
+  //generate all the dogs (please say this is possible)
+  dogNameList = ["", 'bandana', 'corgi', 'pom', 'retreiver', 'schnauz', 'stbernard'];
+  var bandana1 = randomDogGenerator('bandana1');
+  var bandana2 = randomDogGenerator("bandana2");
+  var bandana3 = randomDogGenerator("bandana3");
+  var bandana4 = randomDogGenerator("bandana4");
+  var bandana5 = randomDogGenerator("bandana5");
+  var bandana6 = randomDogGenerator("bandana6");
+  var bandana7 = randomDogGenerator("bandana7");
+  var bandana8 = randomDogGenerator("bandana8");
+
+  var corgi1 = randomDogGenerator("corgi1");
+  var corgi2 = randomDogGenerator("corgi2");
+  var corgi3 = randomDogGenerator("corgi3");
+  var corgi4 = randomDogGenerator("corgi4");
+  var corgi5 = randomDogGenerator("corgi5");
+  var corgi6 = randomDogGenerator("corgi6");
+  var corgi7 = randomDogGenerator("corgi7");
+  var corgi8 = randomDogGenerator("corgi8");
+
+  var pom1 = randomDogGenerator("pom1");
+  var pom2 = randomDogGenerator("pom2");
+  var pom3 = randomDogGenerator("pom3");
+  var pom4 = randomDogGenerator("pom4");
+  var pom5 = randomDogGenerator("pom5");
+  var pom6 = randomDogGenerator("pom6");
+  var pom7 = randomDogGenerator("pom7");
+  var pom8 = randomDogGenerator("pom8");
+
+  var retreiver1 = randomDogGenerator("retreiver1");
+  var retreiver2 = randomDogGenerator("retreiver2");
+  var retreiver3 = randomDogGenerator("retreiver3");
+  var retreiver4 = randomDogGenerator("retreiver4");
+  var retreiver5 = randomDogGenerator("retreiver5");
+  var retreiver6 = randomDogGenerator("retreiver6");
+  var retreiver7 = randomDogGenerator("retreiver7");
+  var retreiver8 = randomDogGenerator("retreiver1");
+
+  var schauz1 = randomDogGenerator("schauz1");
+  var schauz2 = randomDogGenerator("schauz2");
+  var schauz3 = randomDogGenerator("schauz3");
+  var schauz4 = randomDogGenerator("schauz4");
+  var schauz5 = randomDogGenerator("schauz5");
+  var schauz6 = randomDogGenerator("schauz6");
+  var schauz7 = randomDogGenerator("schauz7");
+  var schauz8 = randomDogGenerator("schauz8");
+
+  var stbernard1 = randomDogGenerator("stbernard1");
+  var stbernard2 = randomDogGenerator("stbernard2");
+  var stbernard3 = randomDogGenerator("stbernard3");
+  var stbernard4 = randomDogGenerator("stbernard4");
+  var stbernard5 = randomDogGenerator("stbernard5");
+  var stbernard6 = randomDogGenerator("stbernard6");
+  var stbernard7 = randomDogGenerator("stbernard7");
+  var stbernard8 = randomDogGenerator("stbernard8");
+
+  allDogs = [corgi1, corgi2, corgi3, corgi4, corgi5, corgi6, corgi7, corgi8, bandana1, bandana2, bandana3, bandana4, bandana5, bandana6, bandana7, bandana8];
 
   scoreText = game.add.text(16, 16, player.name + " Score: " + score, { fontSize: '32px', fill: '#000' });
   //the player can move
@@ -110569,8 +110633,6 @@ function update() {
     player.frame = 1;
   }
 }
-
-exports.default = game;
 
 /***/ })
 /******/ ]);
