@@ -10,9 +10,11 @@ let dogs,
   doghorde,
   welcome,
   wordColor,
+  playButton,
   wasd;
 let score = 0;
 let score2 = 0;
 
 game.state.add("Game", Game);
-game.state.start("Game");
+game.state.add("menu", menu)
+game.state.start("menu");

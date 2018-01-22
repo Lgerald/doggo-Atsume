@@ -82,12 +82,14 @@ var dogs = void 0,
     doghorde = void 0,
     welcome = void 0,
     wordColor = void 0,
+    playButton = void 0,
     wasd = void 0;
 var score = 0;
 var score2 = 0;
 
 game.state.add("Game", Game);
-game.state.start("Game");
+game.state.add("menu", menu);
+game.state.start("menu");
 
 /***/ })
 /******/ ]);

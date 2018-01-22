@@ -93,7 +93,7 @@ create: function() {
   //add dog groups
   dogs = game.add.group();
   dogs.enableBody = true
-  //add player (but find a new one)
+  //add players
   player = game.add.sprite(16, 80, "person");
   player2 = game.add.sprite(270, 80, "person2");
   //enable physics for player and dogs
@@ -103,8 +103,18 @@ create: function() {
   game.physics.arcade.enable(dogs);
   player.body.collideWorldBounds = true;
   player2.body.collideWorldBounds = true;
+  player.body.bounce.setTo(10, 10);
+  player2.body.bounce.setTo(10, 10);
 
+  player.body.checkCollision.up = true;
+  player.body.checkCollision.down = true;
+  player.body.checkCollision.letft = true;
+  player.body.checkCollision.right = true;
 
+  player2.body.checkCollision.up = true;
+  player2.body.checkCollision.down = true;
+  player2.body.checkCollision.letft = true;
+  player2.body.checkCollision.right = true;
 
   //add animations for players
   player.animations.add("left", [4,5,6,7], 10, true);
@@ -186,7 +196,7 @@ create: function() {
 
 
   scoreText = game.add.text(16,16, `P1 score: ${score}`, { fontSize: '32px', fill: wordColor })
-  scoreText2 = game.add.text(270, 16, `P2 score: ${score2}`, {fontSize: "32px", fill: wordColor});
+  scoreText2 = game.add.text(250, 16, `P2 score: ${score2}`, {fontSize: "32px", fill: wordColor});
 
   //the player can move
   cursors = game.input.keyboard.createCursorKeys();
@@ -265,7 +275,8 @@ update: function() {
     player.animations.stop();
     player.frame = 1;
   }
-
+  game.physics.arcade.overlap(player2, player, fight, null, this)
+  game.physics.arcade.overlap(player, player2, fight, null, this);
   game.physics.arcade.overlap(player2, dogs, collectDoggo2, null, this);
   //player 2 controls
   player2.body.velocity.x = 0;
