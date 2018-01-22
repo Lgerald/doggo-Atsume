@@ -1,10 +1,5 @@
-const game = new Phaser.Game(470, 470, Phaser.AUTO, "", {
-  preload: preload,
-  create: create,
-  update: update
-});
-
-function preload() {
+const Game = {
+preload: function() {
   //background
   let which = Math.ceil(Math.random()*12)
   switch (which) {
@@ -86,22 +81,9 @@ function preload() {
   for (let i = 1; i <= 8; i++) {
     game.load.spritesheet(`stbernard${i}`, `assets/stBernard/stbernard${i}.png`, 48, 48);
   }
-}
-let dogs,
-  player,
-  player2,
-  allDogs,
-  cursors2,
-  cursors,
-  scoreText,
-  scoreText2,
-  doghorde,
-  welcome,
-  wordColor,
-  wasd;
-let score = 0
-let score2 = 0
-function create() {
+},
+
+create: function() {
   
   game.physics.startSystem(Phaser.Physics.ARCADE);
   //set game board
@@ -217,32 +199,9 @@ function create() {
   right2: game.input.keyboard.addKey(Phaser.Keyboard.D)
 };
 
-}
-function collectDoggo1(player, doggo) {
-  if (!player.hasOverlapped && !doggo.hasOverlapped) {
-    player.hasOverlapped = doggo.hasOverlapped = true;
-    doggo.kill();
-    //updates score
-    score += 1;
-    scoreText.text = `P1 score: ${score}`;
-  } else {
-    player.hasOverlapped = doggo.hasOverlapped = false;
-  }
-}
-function collectDoggo2(player2, doggo) {
-  if (!player2.hasOverlapped && !doggo.hasOverlapped) {
-    player2.hasOverlapped = doggo.hasOverlapped = true;
-    doggo.kill();
-    //updates score
-    score2 += 1;
-    scoreText2.text = `P2 score: ${score2}`;
-  } else {
-    player2.hasOverlapped = doggo.hasOverlapped = false;
-  }
-}
+},
 
-
-function update() {
+update: function() {
    //Reset the players velocity (movement)
 
     doghorde.x += 2
@@ -335,3 +294,5 @@ function update() {
 }
 
 
+
+}
