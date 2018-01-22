@@ -104050,7 +104050,7 @@ function preload() {
       break;
     case 3:
       game.load.image("original", "assets/background/chihaha.png");
-      wordColor = "#000";
+      wordColor = "#FFF";
       break;
     case 4:
       game.load.image("original", "assets/background/corgikayak.png");
@@ -104074,7 +104074,7 @@ function preload() {
       break;
     case 9:
       game.load.image("original", "assets/background/stbernard.png");
-      wordColor = "#FFF";
+      wordColor = "#000";
       break;
     case 10:
       game.load.image("original", "assets/background/valentine.png");
@@ -104232,10 +104232,8 @@ function create() {
 
   allDogs = [stbernard1, stbernard2, stbernard3, stbernard4, stbernard5, stbernard6, stbernard7, stbernard8, schauz1, schauz2, schauz3, schauz4, schauz5, schauz6, schauz7, schauz8, retreiver1, retreiver2, retreiver3, retreiver4, retreiver5, retreiver6, retreiver7, retreiver8, pom1, pom2, pom3, pom4, pom5, pom6, pom7, pom8, corgi1, corgi2, corgi3, corgi4, corgi5, corgi6, corgi7, corgi8, bandana1, bandana2, bandana3, bandana4, bandana5, bandana6, bandana7, bandana8];
 
-  scoreText = game.add.text(16, 16, "Doggos: " + score, { fontSize: '32px', fill: wordColor });
-  scoreText2 = game.add.text(270, 16, "Doggos2: " + score2, {
-    fontSize: "32px",
-    fill: wordColor });
+  scoreText = game.add.text(16, 16, "P1 score: " + score, { fontSize: '32px', fill: wordColor });
+  scoreText2 = game.add.text(270, 16, "P2 score: " + score2, { fontSize: "32px", fill: wordColor });
 
   //the player can move
   cursors = game.input.keyboard.createCursorKeys();

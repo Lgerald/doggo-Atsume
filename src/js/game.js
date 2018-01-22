@@ -18,7 +18,7 @@ function preload() {
       break
     case 3:
       game.load.image("original", "assets/background/chihaha.png");
-      wordColor = "#000"
+      wordColor = "#FFF"
       break
     case 4:
       game.load.image("original", "assets/background/corgikayak.png");
@@ -42,7 +42,7 @@ function preload() {
       break
     case 9:
       game.load.image("original", "assets/background/stbernard.png");
-      wordColor = "#FFF"
+      wordColor = "#000"
       break
     case 10:
       game.load.image("original", "assets/background/valentine.png");
