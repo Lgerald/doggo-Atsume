@@ -103,8 +103,7 @@ create: function() {
   game.physics.arcade.enable(dogs);
   player.body.collideWorldBounds = true;
   player2.body.collideWorldBounds = true;
-  player.body.bounce.setTo(10, 10);
-  player2.body.bounce.setTo(10, 10);
+
 
   player.body.checkCollision.up = true;
   player.body.checkCollision.down = true;
