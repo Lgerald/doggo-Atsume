@@ -6,7 +6,7 @@ const pixi = path.join(phaserModule, 'build/custom/pixi.js')
 const p2 = path.join(phaserModule, 'build/custom/p2.js')
 
 module.exports = {
-  entry: './src/js/index.js',
+  entry: './public',
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
